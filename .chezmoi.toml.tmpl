@@ -1,0 +1,24 @@
+# デフォルト値を設定
+{{- $name := "ask-jun12" -}}
+{{- $email := "asaka.engineer1206@gmail.com" -}}
+{{- $ghqRoot := "~/ghq" -}}
+
+# インタラクティブモードの場合のみ質問する
+{{- if stdinIsATTY -}}
+    {{- $profile := promptString "Which profile? (personal/work)" "personal" -}}
+    
+    {{- if eq $profile "work" -}}
+        {{- $name = "Your Work Name" -}}
+        {{- $email = "me@company.com" -}}
+        {{- $ghqRoot = "~/ghq" -}}
+    {{- else -}}
+        {{- $name = "ask-jun12" -}}
+        {{- $email = "asaka.engineer1206@gmail.com" -}}
+        {{- $ghqRoot = "D:\\ghq" -}}
+    {{- end -}}
+{{- end }}
+
+[data]
+    name = {{ $name | quote }}
+    email = {{ $email | quote }}
+    ghq_root = {{ $ghqRoot | quote }}

@@ -1,0 +1,13 @@
+[user]
+	name = {{ .name }}
+	email = {{ .email }}
+[credential]
+{{- if eq .chezmoi.os "windows" }}
+	helper = manager-core
+{{- else if eq .chezmoi.os "darwin" }}
+	helper = osxkeychain
+{{- else }}
+	helper = cache --timeout=28800
+{{- end }}
+[ghq]
+	root = {{ .ghq_root | replace "\\" "\\\\" }}
