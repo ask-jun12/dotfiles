@@ -1,0 +1,4 @@
+# このファイルに環境変数を記載してください
+export PATH="$HOME/bin:$PATH"
+export PATH="/usr/bin:$PATH"
+export PATH="/snap/bin:$PATH"
