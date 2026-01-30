@@ -1,0 +1,89 @@
+#!/usr/bin/env zsh
+set -euo pipefail
+
+# OSガード: Linux/macOSのみ実行
+if [[ "{{ .chezmoi.os }}" != "linux" && "{{ .chezmoi.os }}" != "darwin" ]]; then
+  exit 0
+fi
+
+# sudoがあれば使う
+if command -v sudo >/dev/null 2>&1; then
+  SUDO="sudo"
+else
+  SUDO=""
+fi
+
+if [[ "{{ .chezmoi.os }}" == "linux" ]]; then
+  # aptがあるか確認
+  if ! command -v apt >/dev/null 2>&1; then
+    echo "apt not found; skipping package install." >&2
+    exit 0
+  fi
+
+  $SUDO apt update
+
+  # apt用パッケージ一覧 (Debian/Ubuntu)
+  packages=(
+    ripgrep
+    fzf
+    fd-find
+    git-delta
+    gh
+    ghq
+    git
+    helix
+    lazygit
+    lsd
+    neovim
+    peco
+    yazi
+  )
+
+  # 未インストールのみ入れる
+  for pkg in "${packages[@]}"; do
+    if dpkg -s "$pkg" >/dev/null 2>&1; then
+      continue
+    fi
+
+    if ! $SUDO apt install -y "$pkg"; then
+      echo "apt install failed for $pkg. Trying snap..."
+      if command -v snap >/dev/null 2>&1; then
+        $SUDO snap install "$pkg" --classic || echo "snap install failed for $pkg"
+      else
+        echo "snap not found or failed. Skipping $pkg."
+      fi
+    fi
+  done
+
+elif [[ "{{ .chezmoi.os }}" == "darwin" ]]; then
+  # Homebrewがあるか確認
+  if ! command -v brew >/dev/null 2>&1; then
+    echo "brew not found; skipping package install." >&2
+    exit 0
+  fi
+
+  # Homebrew用パッケージ一覧
+  packages=(
+    ripgrep
+    fzf
+    fd
+    git-delta
+    gh
+    ghq
+    git
+    helix
+    lazygit
+    lsd
+    neovim
+    peco
+    yazi
+  )
+
+  # 未インストールのみ入れる
+  for pkg in "${packages[@]}"; do
+    if brew list --formula "$pkg" >/dev/null 2>&1; then
+      continue
+    fi
+    brew install "$pkg"
+  done
+fi
