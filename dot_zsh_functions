@@ -1,0 +1,9 @@
+# オリジナル関数はここに追加してください。
+# 使いたい関数ごとに目的・引数・振る舞いをまとめると管理しやすいです。
+
+function repo {
+  local dir="$( ghq list -p | peco )"
+  if [ ! -z "$dir" ] ; then
+    cd "$dir"
+  fi
+}

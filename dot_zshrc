@@ -8,6 +8,11 @@ if [ -f "$HOME/.zsh_aliases" ]; then
 	source "$HOME/.zsh_aliases"
 fi
 
+## オリジナル関数用ファイルを読み込む
+if [ -f "$HOME/.zsh_functions" ]; then
+	source "$HOME/.zsh_functions"
+fi
+
 ## プロンプトの設定
 
 autoload -Uz promptinit
