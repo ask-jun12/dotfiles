@@ -1,0 +1,14 @@
+.git
+.DS_Store
+
+{{ if ne .chezmoi.os "windows" }}
+# Windows以外（Mac/Linux）ではWindows用のフォルダを無視
+AppData
+Documents/PowerShell
+{{ end }}
+
+{{ if eq .chezmoi.os "windows" }}
+# WindowsではUnix系の設定を無視
+.config/nvim
+.zshrc
+{{ end }}

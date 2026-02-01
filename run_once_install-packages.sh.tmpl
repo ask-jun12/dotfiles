@@ -24,6 +24,7 @@ if [[ "{{ .chezmoi.os }}" == "linux" ]]; then
 
   # apt用パッケージ一覧 (Debian/Ubuntu)
   packages=(
+    build-essential
     ripgrep
     fzf
     fd-find
@@ -35,6 +36,7 @@ if [[ "{{ .chezmoi.os }}" == "linux" ]]; then
     lazygit
     lsd
     peco
+    unzip
     yazi
   )
 
@@ -70,6 +72,7 @@ elif [[ "{{ .chezmoi.os }}" == "darwin" ]]; then
 
   # Homebrew用パッケージ一覧
   packages=(
+    build-essential
     ripgrep
     fzf
     fd
@@ -82,6 +85,7 @@ elif [[ "{{ .chezmoi.os }}" == "darwin" ]]; then
     lsd
     neovim
     peco
+    unzip
     yazi
   )
 
