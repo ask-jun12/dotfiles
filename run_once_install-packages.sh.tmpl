@@ -34,7 +34,6 @@ if [[ "{{ .chezmoi.os }}" == "linux" ]]; then
     helix
     lazygit
     lsd
-    neovim
     peco
     yazi
   )
@@ -54,6 +53,13 @@ if [[ "{{ .chezmoi.os }}" == "linux" ]]; then
       fi
     fi
   done
+
+  # NeovimはAppImageで最新版を取得
+  curl -LO https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.appimage
+  chmod u+x nvim-linux-x86_64.appimage
+  ./nvim-linux-x86_64.appimage
+  $SUDO mkdir -p /opt/nvim
+  $SUDO mv nvim-linux-x86_64.appimage /opt/nvim/nvim
 
 elif [[ "{{ .chezmoi.os }}" == "darwin" ]]; then
   # Homebrewがあるか確認
