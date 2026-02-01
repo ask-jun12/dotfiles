@@ -87,3 +87,9 @@ elif [[ "{{ .chezmoi.os }}" == "darwin" ]]; then
     brew install "$pkg"
   done
 fi
+
+# miseインストール (未インストール時のみ)
+if ! command -v mise >/dev/null 2>&1; then
+  echo "Installing mise..."
+  curl https://mise.run | sh
+fi
