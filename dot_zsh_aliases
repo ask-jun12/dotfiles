@@ -1,2 +1,4 @@
 # このファイルにエイリアスを記載してください
 alias ll='lsd -alF'
+alias gwr='git gtr'
+alias fd='fdfind'

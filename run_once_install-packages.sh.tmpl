@@ -27,7 +27,7 @@ if [[ "{{ .chezmoi.os }}" == "linux" ]]; then
   packages=(
     bat
     build-essential
-    fd
+    fd-find
     fzf
     gh
     ghq
@@ -122,4 +122,18 @@ fi
 if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
   echo "Installing oh-my-zsh..."
   sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+fi
+
+# git-worktree-runnerインストール (未インストール時のみ)
+if ! command -v git-gtr >/dev/null 2>&1; then
+  echo "Installing git-worktree-runner..."
+  GTR_DIR="$HOME/.local/share/git-worktree-runner"
+  
+  # まだクローンされていない場合のみクローン
+  if [[ ! -d "$GTR_DIR" ]]; then
+    git clone https://github.com/coderabbitai/git-worktree-runner.git "$GTR_DIR"
+  fi
+  
+  # シンボリックリンク作成（既存の場合は上書き）
+  $SUDO ln -sf "$GTR_DIR/bin/git-gtr" /usr/local/bin/git-gtr
 fi
