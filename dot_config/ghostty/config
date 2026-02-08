@@ -1,0 +1,21 @@
+font-family = BlexMono Nerd Font Mono
+font-size = 16
+theme = iTerm2 Smoooooth
+
+# 背景を透過
+background-opacity = 0.90
+
+# ブラー（すりガラス効果）
+background-blur-radius = 15
+
+# テキストとウィンドウの間に良い感じのスペースを入れます
+window-padding-x = 10
+window-padding-y = 10
+window-padding-balance = true
+
+macos-titlebar-style = transparent
+macos-window-shadow = true
+
+# 入力中はマウスカーソルを隠す
+mouse-hide-while-typing = true
+

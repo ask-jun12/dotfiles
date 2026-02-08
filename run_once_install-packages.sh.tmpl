@@ -21,23 +21,28 @@ if [[ "{{ .chezmoi.os }}" == "linux" ]]; then
   fi
 
   $SUDO apt update
+  $SUDO apt upgrade -y
 
   # apt用パッケージ一覧 (Debian/Ubuntu)
   packages=(
+    bat
     build-essential
-    ripgrep
+    fd
     fzf
-    fd-find
-    git-delta
     gh
     ghq
+    ghostty
     git
+    git-delta
     helix
     lazygit
     lsd
+    neovim
     peco
+    ripgrep
     unzip
     yazi
+    zellij
   )
 
   # 未インストールのみ入れる
@@ -70,31 +75,40 @@ elif [[ "{{ .chezmoi.os }}" == "darwin" ]]; then
     exit 0
   fi
 
+  brew update
+  brew upgrade
+
   # Homebrew用パッケージ一覧
   packages=(
-    build-essential
-    ripgrep
-    fzf
+    bat
     fd
-    git-delta
+    fzf
     gh
     ghq
+    ghostty
     git
+    git-delta
     helix
     lazygit
     lsd
     neovim
     peco
+    ripgrep
     unzip
     yazi
+    zellij
   )
 
   # 未インストールのみ入れる
   for pkg in "${packages[@]}"; do
-    if brew list --formula "$pkg" >/dev/null 2>&1; then
+    if brew list --formula "$pkg" >/dev/null 2>&1 || brew list --cask "$pkg" >/dev/null 2>&1; then
       continue
     fi
-    brew install "$pkg"
+    
+    if ! brew install "$pkg"; then
+      echo "Formula install failed for $pkg. Trying with --cask..."
+      brew install --cask "$pkg" || echo "Cask install also failed for $pkg"
+    fi
   done
 fi
 
@@ -102,4 +116,10 @@ fi
 if ! command -v mise >/dev/null 2>&1; then
   echo "Installing mise..."
   curl https://mise.run | sh
+fi
+
+# oh-my-zshインストール (未インストール時のみ)
+if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
+  echo "Installing oh-my-zsh..."
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 fi

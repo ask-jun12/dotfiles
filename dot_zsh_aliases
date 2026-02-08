@@ -1,2 +1,2 @@
 # このファイルにエイリアスを記載してください
-alias ll='ls -alF --color=auto'
+alias ll='lsd -alF'
