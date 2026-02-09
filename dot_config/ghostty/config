@@ -15,6 +15,7 @@ window-padding-balance = true
 
 macos-titlebar-style = transparent
 macos-window-shadow = true
+macos-option-as-alt = left
 
 # 入力中はマウスカーソルを隠す
 mouse-hide-while-typing = true
